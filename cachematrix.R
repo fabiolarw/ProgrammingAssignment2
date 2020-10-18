@@ -7,14 +7,24 @@
 ## This function creates a special "matrix" object that can cache its inverse.
 makeCacheMatrix <- function(x = matrix()) {
   ## This part will be inspired by makevector function
+  ## initialize variable
   invmat <- NULL
+  
+  ##set value of the matrix
   set <- function(y) {
     x <<- y
     invmat <<- NULL
   }
+  
+  ##get value of the matrix
   get <- function() x
+  
+  ##set value of the inverse matrix
   setInverse <- function(inverse) invmat <<- inverse
+  
+  ##get value of the inverse matrix
   getInverse <- function() invmat
+  
   list(set = set,
        get = get,
        setInverse = setInverse,
@@ -32,9 +42,16 @@ cacheSolve <- function(x, ...) {
     message("getting cached data")
     return(invmat)
   }
+  
+  ##Get the matrix
   data <- x$get()
-  ## if X is a square invertible matrix, then solve(X) returns its inverse.
+  
+  ## Calculate the inverse matrix.
+  ## If X is a square invertible matrix, then solve(X) returns its inverse.
   invmat <- solve(data, ...)
+  
+  ##Set the inverse matrix
   x$setInverse(invmat)
+  
   invmat
 }
